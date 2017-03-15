@@ -107,7 +107,7 @@ extension Expression: CustomStringConvertible {
     var description: String {
         switch self {
         case let .Property(key): return key
-        case let .Constant(value): return String(value)
+        case let .Constant(value): return String(describing: value)
         case let .Negated(expression): return "!(\(expression))"
         case let .Binary(lhs, op, rhs): return "(\(lhs)) \(op) (\(rhs))"
         }
@@ -120,7 +120,7 @@ Now that we can fully convert an `Expression`, our simplified _representation_ o
 
 extension NSPredicate {
     convenience init(_ expression: Expression) {
-        self.init(format: String(expression))
+        self.init(format: String(describing: expression))
     }
 }
 
@@ -146,7 +146,7 @@ Literal protocols will allow us to type a value such as `3` and have it automati
 I've implemented `Bool`, `String`, and `Integer` conversion in the snippet below - it's pretty much plug 'n' chug mapping values into `Constant`, etc. cases:
 */
 
-extension Expression: BooleanLiteralConvertible, IntegerLiteralConvertible, StringLiteralConvertible {
+extension Expression: ExpressibleByBooleanLiteral, ExpressibleByIntegerLiteral, ExpressibleByStringLiteral {
     typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
     typealias UnicodeScalarLiteralType = StringLiteralType
     
@@ -230,7 +230,7 @@ let people: NSArray = [Person(tweets: 250, age: 18),
     Person(tweets: 80, age: 22)]
 
 let tweetsPred = NSPredicate("tweets" > 200 && "age" == 18)
-let filtered = people.filteredArrayUsingPredicate(tweetsPred)
+let filtered = people.filtered(using: tweetsPred)
 
 /*:
 Looks neat, plus you get some _minor_ validation wins done by the compiler. Note, however, it is still entirely possible to construct an invalid `NSPredicate` with the existing DSL - it's more demo/thought experiment than production-ready library!
