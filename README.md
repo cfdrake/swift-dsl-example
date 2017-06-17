@@ -1,5 +1,5 @@
 # Swift DSL Example
-This is my blog article [Implementing a Small DSL in Swift](http://colindrake.me/2015/10/28/implementing-a-small-dsl-in-swift/) implemented as a literate program in a Swift playground.
+This is my blog article [Implementing a Small DSL in Swift](https://colindrake.me/post/implementing-a-small-dsl-in-swift/) implemented as a literate program in a Swift playground.
 
 If you like this, feel free to check out [my site](http://colindrake.me)!
 
